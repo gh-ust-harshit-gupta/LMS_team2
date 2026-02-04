@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+python-jose
+python-dotenv
+pymongo
+argon2-cffi
