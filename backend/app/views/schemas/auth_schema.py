@@ -1,6 +1,7 @@
 from datetime import date
-from pydantic import BaseModel, EmailStr,Field
-from app.core.Constants import UserRole,LoginMethod
+from pydantic import BaseModel, EmailStr
+from app.core.Constants import UserRole
+
 
 class CustomerRegisterSchema(BaseModel):
     full_name: str
@@ -10,20 +11,18 @@ class CustomerRegisterSchema(BaseModel):
     dob: date
     gender: str
     pan_number: str
-    mpin: str= Field(min_length=4, max_length=6)
 
 
 class LoginSchema(BaseModel):
-    role: UserRole
-    login_method: LoginMethod # "PASSWORD" or "MPIN"
-
-    email: EmailStr | None = None
-    password: str | None = None
-
-    mpin: str | None = None
+    email: EmailStr
+    password: str
+    # Accept role as a string for flexibility (e.g., "CUSTOMER")
+    role: str
 
 
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "Bearer"
-    role: UserRole
+    role: str
+    # Full authorization header value ready for copy-paste ("Bearer <token>")
+    authorization: str | None = None

@@ -6,13 +6,13 @@ class KycRepository:
         self.collection.insert_one(kyc)
         return kyc
 
-    def find_pending(self):
-        return list(self.collection.find({"status": "PENDING_VERIFICATION"}))
+    def find_by_customer_id(self, customer_id: int):
+        return self.collection.find_one({"customer_id": customer_id})
 
     def find_by_kyc_id(self, kyc_id: int):
         return self.collection.find_one({"kyc_id": kyc_id})
 
-    def update_verification(self, kyc_id: int, update: dict):
+    def update(self, kyc_id: int, update: dict):
         self.collection.update_one(
             {"kyc_id": kyc_id},
             {"$set": update}
