@@ -1,6 +1,6 @@
 from datetime import date
-from pydantic import BaseModel, EmailStr
-from app.core.Constants import UserRole
+from pydantic import BaseModel, EmailStr,Field
+from app.core.Constants import UserRole,LoginMethod
 
 class CustomerRegisterSchema(BaseModel):
     full_name: str
@@ -10,12 +10,17 @@ class CustomerRegisterSchema(BaseModel):
     dob: date
     gender: str
     pan_number: str
+    mpin: str= Field(min_length=4, max_length=6)
 
 
 class LoginSchema(BaseModel):
-    email: EmailStr
-    password: str
-    role:UserRole
+    role: UserRole
+    login_method: LoginMethod # "PASSWORD" or "MPIN"
+
+    email: EmailStr | None = None
+    password: str | None = None
+
+    mpin: str | None = None
 
 
 class TokenResponse(BaseModel):

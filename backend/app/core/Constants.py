@@ -6,3 +6,8 @@ class UserRole(str, Enum):
     MANAGER = "MANAGER"
     ADMIN = "ADMIN"
     VERIFICATION_TEAM = "VERIFICATION_TEAM"
+
+
+class LoginMethod(str, Enum):
+    PASSWORD = "PASSWORD"
+    MPIN = "MPIN"
