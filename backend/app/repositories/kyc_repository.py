@@ -3,7 +3,9 @@ class KycRepository:
         self.collection = db["kyc"]
 
     def create(self, kyc: dict):
-        self.collection.insert_one(kyc)
+        result = self.collection.insert_one(kyc)
+        # save a JSON-serializable string id for responses
+        kyc["_id"] = str(result.inserted_id)
         return kyc
 
     def find_by_customer_id(self, customer_id: int):

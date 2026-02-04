@@ -13,11 +13,14 @@ class CustomerRegisterSchema(BaseModel):
     pan_number: str
 
 
+from typing import Optional
+
 class LoginSchema(BaseModel):
     email: EmailStr
     password: str
-    # Accept role as a string for flexibility (e.g., "CUSTOMER")
-    role: str
+    # Accept role as an optional string for flexibility (e.g., "CUSTOMER"). If omitted,
+    # authentication will attempt to resolve the role automatically.
+    role: Optional[str] = None
 
 
 class TokenResponse(BaseModel):

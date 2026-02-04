@@ -6,6 +6,7 @@ from app.views.schemas.auth_schema import (
     LoginSchema,
     TokenResponse
 )
+
 from app.services.auth_service import AuthService
 from app.repositories.user_repository import UserRepository
 from app.database import get_db
@@ -63,9 +64,10 @@ async def login(
         form = await request.form()
         identifier = form.get("username") or form.get("email")
         password = form.get("password")
-        # role may be omitted (OAuth2 flows typically don't include role). Default to CUSTOMER.
+        # role may be omitted (OAuth2 flows typically don't include role). Leave as None to let
+        # the AuthService attempt to resolve the correct role automatically.
         form_role = form.get("role") or form.get("scope")
-        final_role = role or form_role or "CUSTOMER"
+        final_role = role or form_role or None
 
         if not identifier or not password:
             raise HTTPException(

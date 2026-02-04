@@ -8,6 +8,3 @@ class UserRole(str, Enum):
     VERIFICATION_TEAM = "VERIFICATION_TEAM"
 
 
-class LoginMethod(str, Enum):
-    PASSWORD = "PASSWORD"
-    MPIN = "MPIN"

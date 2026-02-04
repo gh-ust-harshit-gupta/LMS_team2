@@ -25,5 +25,5 @@ def submit_kyc(
     return service.submit_kyc(
         customer_id=user["customer_id"],
         data=payload.dict(),
-        submitted_by=user["user_id"]
+        submitted_by=user["sub"]
     )

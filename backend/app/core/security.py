@@ -88,11 +88,26 @@ def create_access_token(data: dict) -> str:
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
+from app.database import get_db
+from app.repositories.customer_repository import CustomerRepository
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+
+def get_current_user(token: str = Depends(oauth2_scheme), db=Depends(get_db)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        return payload
+        user_id = payload.get("sub")
+        role = payload.get("role")
+
+        # fetch customer profile if exists
+        customer_repo = CustomerRepository(db)
+        customer = customer_repo.find_by_user_id(user_id)
+
+        return {
+            "sub": user_id,
+            "user_id": user_id,
+            "role": role,
+            "customer_id": customer["customer_id"] if customer else None
+        }
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
