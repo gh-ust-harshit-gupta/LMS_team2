@@ -1,5 +1,5 @@
 import LoanInfoLayout from "../components/LoanInfoLayout";
-import { homeLoan } from "../data/loanContent";
+import { homeLoan } from "../components/loanContent";
 
 export default function HomeLoanInfo() {
   return (
